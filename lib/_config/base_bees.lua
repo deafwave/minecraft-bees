@@ -53,6 +53,7 @@ local base_bees = {
     ["gendustry.bee.Uranium"] = "Radiating Callstone?",
     ["gendustry.bee.Springwater"] = "Skeletal Callstone?",
     ["gendustry.bee.Gorgon"] = "Fluix Callstone?",
+    ["careerbees.energy"] = "Terraformassiflora -> Biome Ritual Callstone?",
 
     -- Villager Trade
     ["forestry.speciesMonastic"] = "Apiarist Villager Trade - forestry.speciesForest",
@@ -72,7 +73,6 @@ local base_bees = {
 
     -- Unknown bees
     ["careerbees.crusher"] = "Unknown",
-    ["careerbees.energy"] = "Unknown",
     ["careerbees.repair"] = "Unknown",
     ["extrabees.species.coffee"] = "Unknown",
     ["extrabees.species.fuel"] = "Unknown",
