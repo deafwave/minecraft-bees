@@ -15,7 +15,6 @@ local function obtainUpgrades(upgradeType, count)
         return nil
     end
 
-    -- Try to find or craft production upgrades
     local upgradeItem = ae2.findOrCraftItem("gendustry:apiary.upgrade@" .. upgradeType, count)
     if not upgradeItem then
         print("Unable to get upgrades with metadata " .. upgradeType)
@@ -23,7 +22,6 @@ local function obtainUpgrades(upgradeType, count)
     end
 
     local metadata = upgradeItem.getMetadata()
-    -- print("Got " .. metadata.count .. " upgrades with metadata " .. upgradeType)
     return {
         interface = interface,
         count = metadata.count,
@@ -31,7 +29,7 @@ local function obtainUpgrades(upgradeType, count)
     }
 end
 
--- FIXME: Why isn't distribution working?
+-- FIXME: Exporting items from AE2 isn't doing anything
 local function distributeUpgrades(upgradeInfo)
     if not upgradeInfo or upgradeInfo.count == 0 then
         return
@@ -62,7 +60,6 @@ local function collectApiaryOutputs()
         return false
     end
 
-    -- Find ME interface and crate
     local interface = peripheral.find("appliedenergistics2:interface")
     local crate = peripheral.find("actuallyadditions:giantchestlarge")
 
@@ -77,25 +74,21 @@ local function collectApiaryOutputs()
     end
 
     for _, apiary in ipairs(apiaries) do
-        -- Process output slots (7-15)
-        for slot = 7, 15 do
+        for slot = 7, 15 do -- Output Slots
             local item = apiary.getItemMeta(slot)
             if item then
                 local targetPeripheral
                 local targetName
 
-                -- If it's a bee (princess, drone, or queen), send to crate
                 if item.name == "forestry:bee_princess_ge" or
                     item.name == "forestry:bee_drone_ge" then
                     targetPeripheral = crate
                     targetName = peripheral.getName(crate)
-                    -- Otherwise (combs, etc), send to ME interface
                 else
                     targetPeripheral = interface
                     targetName = peripheral.getName(interface)
                 end
 
-                -- Push the item to the appropriate destination
                 apiary.pushItems(targetName, slot)
             end
         end

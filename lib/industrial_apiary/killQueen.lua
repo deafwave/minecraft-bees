@@ -20,7 +20,6 @@ local function killPoorQualityQueen()
         return false
     end
 
-    -- Find empty apiaries first
     local emptyApiaries = {}
     for i, apiary in ipairs(apiaries) do
         local errors = apiary.getErrors()
@@ -36,24 +35,19 @@ local function killPoorQualityQueen()
         end
     end
     if #emptyApiaries == 0 then
-        -- print("No empty apiaries found")
         return false
     end
 
     local inventory = beeUtils.buildBeeInventory(false, false)
     local currentApiaryIndex = 1
-    -- Process queens from inventory
     for _, queenData in pairs(inventory.queens) do
         local itemMeta = queenData.storage.getItemMeta(queenData.slot)
-        -- Skip protected bees
         if not (itemMeta and itemMeta.individual and isInList(protectedBees, itemMeta.individual.id)) then
             if currentApiaryIndex <= #emptyApiaries then
                 local targetApiary = emptyApiaries[currentApiaryIndex].apiary
                 local apiaryName = peripheral.getName(targetApiary)
 
-                -- Move queen to apiary
                 queenData.storage.pushItems(apiaryName, queenData.slot, 1)
-                -- print("Moved queen from storage to apiary " .. emptyApiaries[currentApiaryIndex].index)
                 if itemMeta and itemMeta.individual then
                     print("Killing queen " .. itemMeta.individual.id)
                 end

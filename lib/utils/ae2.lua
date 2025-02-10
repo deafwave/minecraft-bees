@@ -6,17 +6,13 @@ local function transferItemFromAE2(itemId, targetPeripheralType, minCount, maxCo
         return false
     end
 
-    -- Find available item
     local item = interface.findItem(itemId)
     if not item then
         print("No " .. itemId .. " in AE2 system")
         return false
     end
 
-    -- Get all peripherals
     local names = peripheral.getNames()
-
-    -- Find all matching peripherals
     for _, destination in ipairs(names) do
         local pType = peripheral.getType(destination)
         if pType == targetPeripheralType then
@@ -48,7 +44,6 @@ local function findOrCraftItem(itemId, count)
         return false
     end
 
-    -- First try to find the item
     local item = interface.findItem(itemId)
     if item then
         local metadata = item.getMetadata()
@@ -57,7 +52,6 @@ local function findOrCraftItem(itemId, count)
         end
     end
 
-    -- If item not found or not enough, try to craft it
     print("Attempting to craft " .. itemId)
     item.craft(count)
 

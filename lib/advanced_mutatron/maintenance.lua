@@ -5,21 +5,10 @@ local function transferLabware()
 end
 
 local function emptyOutputSlot()
-    local mutatrons = {}
-    -- Get all peripherals
-    local names = peripheral.getNames()
-
-    -- Find all matching peripherals
-    for _, name in ipairs(names) do
-        local pType = peripheral.getType(name)
-        if pType == "gendustry:mutatron_advanced" then
-            local device = peripheral.wrap(name)
-            table.insert(mutatrons, device)
-        end
-    end
+    local mutatrons = getMutatrons()
 
     if #mutatrons == 0 then
-        print("No mutatron found!")
+        print("No advanced mutatron found")
         return false
     end
 
@@ -43,7 +32,7 @@ end
 
 local function maintenance()
     transferLabware()
-    emptyOutputSlot()
+    emptyOutputSlot() -- Only used when finishQueen() is disabled
 end
 
 return maintenance

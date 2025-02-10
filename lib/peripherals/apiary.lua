@@ -1,23 +1,3 @@
--- Industrial Apiary Methods:
--- getQueen
--- getDrone
--- getErrors
--- getTemperature
--- getHumidity
--- getRFStored
--- getRFCapacity
--- getEnergyStored
--- getEnergyCapacity
--- getMetadata
--- getItemMeta
--- list
--- size
--- drop
--- suck
--- pullItems
--- getTransferLocations
--- getItem
--- pushItems
 local function getApiaries()
     local apiaries = {}
     

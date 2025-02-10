@@ -7,7 +7,7 @@ local function getTankInfo(peripheral)
 end
 
 local function canAcceptFluid(tank, amount, maxCapacity)
-    maxCapacity = maxCapacity or 8000 -- Default max capacity
+    maxCapacity = maxCapacity or 8000
     if not tank or not tank.amount then
         return true
     end

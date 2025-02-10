@@ -45,7 +45,6 @@ end
 
 local function buildBeeInventory(includeMutatrons, includeApiaries)
     local storages = getBeeStorages(includeMutatrons, includeApiaries)
-    -- print("Building bee inventory...")
     local inventory = {
         existingSpecies = {},
         princesses = {},  -- species -> {storage, slot}
@@ -60,7 +59,6 @@ local function buildBeeInventory(includeMutatrons, includeApiaries)
             local listResult = storage.list()
             if listResult then
                 for slot, item in pairs(listResult) do
-                    -- Filter only bee items we care about
                     if item.name == "forestry:bee_princess_ge" or 
                        item.name == "forestry:bee_drone_ge" or 
                        item.name == "forestry:bee_queen_ge" then
