@@ -15,3 +15,15 @@ The script runs in a continuous loop, ensuring that all tasks are performed regu
 
 ### Known Bugs
 `finishQueen()` duplicates bees due to gendustry not being in Plethora
+
+### TODO
+- Finish list of bees from callstones & other sources (if anyone has a list, I'd appreciate it)
+- Add trashing to FinishQueen so this it doesn't dupe the princess/drone
+- Bugfix maintain apiary to properly handle heater/dryer/humidifier/cooler as needed
+- Compile the code in a way that can be paste-bin'd
+- Add using assassin queen (decent bit of work, not much gain - mech user + CC Redstone + transposer + bee-bee gun?)
+- Write a drone imprinter -> breeder -> sampler script
+  - Princess+Drone -> proper Genetic Imprinter (Effect/No-Effect where applicable)
+  - Send to Industrial Apiary
+  - Export excess drones into a genetic sampler until we get species & effect (where applicable) samples
+- Change function names from e.g. kill->process, etc. to be more socially acceptable
