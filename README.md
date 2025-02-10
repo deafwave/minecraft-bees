@@ -13,3 +13,5 @@ Automates bee breeding using the ComputerCraft mod. It integrates with multiple 
 
 The script runs in a continuous loop, ensuring that all tasks are performed regularly to keep the bee management system running smoothly.
 
+### Known Bugs
+`finishQueen()` duplicates bees due to gendustry not being in Plethora

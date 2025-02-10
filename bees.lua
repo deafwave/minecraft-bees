@@ -14,19 +14,29 @@ if #unknownBees > 0 then
     end
 end
 
+
+-- DEBUGGING
+-- local allBees = beeUtils.buildBeeInventory()
+-- print("Current species in all storage:")
+-- for species, _ in pairs(allBees.existingSpecies) do
+--     print("  " .. species)
+-- end
+
+-- DEBUGGING
+-- local permBees = beeUtils.buildBeeInventory(false)
+-- print("Current species in permanent storage:")
+-- for species, _ in pairs(permBees.existingSpecies) do
+--     print("  " .. species)
+-- end
+
 while true do
     maintainMutatron()
     maintainMutagen()
     maintainApiary()
 
-    -- TODO: Disable finishQueen() for players who don't want to duplicate bees
-    -- Or can add a trashcan system
     createPoorQualityQueen()
-    finishQueen()
+    finishQueen() -- TODO: Add a config setting to turn this off for players who don't want to dupe bees
     killQueen()
 
     sleep(1)
 end
-
--- Known Bugs
--- finishQueen() is duping out of the mutatron

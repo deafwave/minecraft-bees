@@ -1,11 +1,3 @@
--- Unknown number of base bees (will figure it out later)
--- Hives
--- Apiarist Villagers (Monastic)
--- Callstones
-
--- Base bees and their collection sources
--- This table maps bee species to where they can be found in the world
-
 local base_bees = {
     -- Hive-based bees
     ["extrabees.species.basalt"] = "Nether Hives",
@@ -63,7 +55,7 @@ local base_bees = {
     ["gendustry.bee.Gorgon"] = "Fluix Callstone?",
 
     -- Villager Trade
-    ["forestry.speciesMonastic"] = "Apiarist Villager Trade - forestry.speciesForest", -- What is a stronghold library?
+    ["forestry.speciesMonastic"] = "Apiarist Villager Trade - forestry.speciesForest",
 
     -- Elven Trade
     ["magicbees.speciesBOTAlfheim"] = "Elven Trade - magicbees.speciesBOTDreaming (Drone)",
