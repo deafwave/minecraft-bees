@@ -1,4 +1,5 @@
 local ae2 = require("lib.utils.ae2")
+local getMutatrons = require("lib.peripherals.mutatron")
 
 local function transferLabware()
     return ae2.transferItemFromAE2("gendustry:labware", "gendustry:mutatron_advanced", 2, 2, 4)
@@ -17,8 +18,6 @@ local function emptyOutputSlot()
         print("No ActuallyAdditions giant chest found!")
         return false
     end
-
-    local emptiedAny = false
 
     for _, mutatron in pairs(mutatrons) do
         local item = mutatron.getItemMeta(3)
