@@ -44,5 +44,9 @@
     ],
     "[lua]": {
         "editor.formatOnSave": true
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "package.json": "pnpm-lock.yaml"
     }
 }
