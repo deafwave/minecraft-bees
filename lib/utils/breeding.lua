@@ -1,6 +1,7 @@
 local wanted_bees = require("lib._config.wanted_bees")
 local breeding_chart = require("lib._config.breeding_chart")
 local base_bees = require("lib._config.base_bees")
+local yield = require("lib.utils.yield")
 
 -- Find all species required to breed a target species
 local function findRequiredSpecies(targetSpecies, visited)
@@ -149,10 +150,70 @@ local function findUnknownBees()
     return unknownBees
 end
 
+local cachedBreedingPaths = nil
+local cachedTargetSpeciesLookup = nil
+local function getBreedingPaths()
+    if cachedBreedingPaths then
+        return cachedBreedingPaths
+    end
+
+    print("Calculating all breeding paths...")
+    local allPaths = {}
+    local targetSpeciesLookup = {} -- Create lookup table while processing paths
+
+    for _, targetSpecies in ipairs(wanted_bees) do
+        yield()
+        local requiredSpecies = findRequiredSpecies(targetSpecies)
+
+        for species in pairs(requiredSpecies) do
+            yield()
+            if not base_bees[species] then
+                local paths = findBreedingPaths(species)
+                for _, path in ipairs(paths) do
+                    yield()
+                    table.insert(allPaths, path)
+                    -- Add each breeding step's target to the lookup
+                    for _, step in ipairs(path) do
+                        targetSpeciesLookup[step.target] = true
+                    end
+                end
+            end
+        end
+    end
+
+    -- Sort paths by dependency
+    table.sort(allPaths, function(a, b)
+        local aTarget = a[#a].target
+        for _, step in ipairs(b) do
+            yield()
+            if step.parents[1] == aTarget or step.parents[2] == aTarget then
+                return true
+            end
+        end
+        return false
+    end)
+
+    cachedBreedingPaths = allPaths
+    cachedTargetSpeciesLookup = targetSpeciesLookup
+    print("Cached breeding paths!")
+    return allPaths
+end
+
+local function getTargetSpeciesLookup()
+    if cachedTargetSpeciesLookup then
+        return cachedTargetSpeciesLookup
+    end
+    -- Force calculation of both caches if they don't exist
+    getBreedingPaths()
+    return cachedTargetSpeciesLookup
+end
+
 return {
     findBreedingPaths = findBreedingPaths,
     findBestBreedingPair = findBestBreedingPair,
     assignBreedingRoles = assignBreedingRoles,
     findUnknownBees = findUnknownBees,
-    findRequiredSpecies = findRequiredSpecies
+    findRequiredSpecies = findRequiredSpecies,
+    getBreedingPaths = getBreedingPaths,
+    getTargetSpeciesLookup = getTargetSpeciesLookup
 }
