@@ -2,6 +2,7 @@ local getMutatrons = require("lib.peripherals.mutatron")
 local beeUtils = require("lib.bees.bee_utils")
 local breedingUtils = require("lib.utils.breeding")
 local base_bees = require("lib._config.base_bees")
+local yield = require("lib.utils.yield")
 
 -- Prepare to create a queen bee with a desired species
 local function createPoorQualityQueen()
@@ -45,6 +46,7 @@ local function createPoorQualityQueen()
                 -- If species from path a is needed to breed species from path b, a should come first
                 local aTarget = a[#a].target
                 for _, step in ipairs(b) do
+                    yield()
                     if step.parents[1] == aTarget or step.parents[2] == aTarget then
                         return true
                     end
