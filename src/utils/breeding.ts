@@ -175,14 +175,14 @@ function findUnknownBees(): string[] {
 interface BreedingPaths {
     [species: string]: [string, string][];
 }
-let cachedBreedingPaths: BreedingPaths | null = null;
+let cachedBreedingPaths: BreedingPaths;
 export function getBreedingPaths(): BreedingPaths {
     if (cachedBreedingPaths) {
         return cachedBreedingPaths;
     }
+
     console.log("Calculating all breeding paths...");
-    const allPaths: BreedingStep[][] = [];
-    const breedingPaths: { [species: string]: [string, string][] } = {};
+    const allPaths: { [species: string]: Set<string> } = {};
 
     for (const targetSpecies of wantedBees) {
         yieldSmart();
@@ -194,19 +194,23 @@ export function getBreedingPaths(): BreedingPaths {
                 const paths = findBreedingPaths(species);
                 for (const path of paths) {
                     yieldSmart();
-                    allPaths.push(path);
                     for (const step of path) {
-                        if (!breedingPaths[step.target]) {
-                            breedingPaths[step.target] = [];
+                        if (!allPaths[step.target]) {
+                            allPaths[step.target] = new Set();
                         }
-                        breedingPaths[step.target].push(step.parents);
+                        allPaths[step.target].add(JSON.stringify(step.parents.sort()));
                     }
                 }
             }
         }
     }
 
-    cachedBreedingPaths = breedingPaths;
+    const result: BreedingPaths = {};
+    for (const [species, speciesSet] of Object.entries(allPaths)) {
+        result[species] = Array.from(speciesSet).map(item => JSON.parse(item))
+    }
+
+    cachedBreedingPaths = result;
     console.log("Cached breeding paths!");
-    return breedingPaths;
+    return result;
 }
