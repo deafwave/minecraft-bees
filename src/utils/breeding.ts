@@ -147,7 +147,7 @@ function findBestBreedingPair(
     return null;
 }
 
-function findUnknownBees(): string[] {
+export function findUnknownBees(): string[] {
     const allMentionedBees: Record<string, boolean> = {};
 
     for (const result in breedingChart) {
@@ -181,7 +181,7 @@ export function getBreedingPaths(): BreedingPaths {
         return cachedBreedingPaths;
     }
 
-    console.log("Calculating all breeding paths...");
+    print("Calculating all breeding paths...");
     const allPaths: { [species: string]: Set<string> } = {};
 
     for (const targetSpecies of wantedBees) {
@@ -211,6 +211,6 @@ export function getBreedingPaths(): BreedingPaths {
     }
 
     cachedBreedingPaths = result;
-    console.log("Cached breeding paths!");
+    print("Cached breeding paths!");
     return result;
 }
