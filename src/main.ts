@@ -1,12 +1,13 @@
+import { maintainMutatron } from "./lib/advanced-mutatron"
 import { findUnknownBees } from "./utils/breeding"
 
-const unknownBees = findUnknownBees()
-if (unknownBees.length > 0) {
-    print("Unknown bees:")
-    for (const bee of unknownBees) {
-        print(bee)
-    }
-}
+// const unknownBees = findUnknownBees()
+// if (unknownBees.length > 0) {
+//     print("Unknown bees:")
+//     for (const bee of unknownBees) {
+//         print(bee)
+//     }
+// }
 
 // -- DEBUGGING
 // -- local allBees = beeUtils.buildBeeInventory()
@@ -23,7 +24,7 @@ if (unknownBees.length > 0) {
 // -- end
 
 while(true) {
-    // maintainMutatron()
+    maintainMutatron()
     // maintainMutagen()
     // maintainApiary()
 
