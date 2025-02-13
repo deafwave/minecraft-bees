@@ -121,12 +121,12 @@ const craftQueen = () => {
 						mutatron.pushItems(peripheral.getName(storage), slot)
 					}
 					preparedQueens.delete(species)
-					mutatron.pushItems(peripheral.getName(storage), 1)
-					mutatron.pushItems(peripheral.getName(storage), 2)
 					return
 				}
 			}
 		})
+		mutatron.pushItems(peripheral.getName(storage), 1)
+		mutatron.pushItems(peripheral.getName(storage), 2)
 	}
 }
 
