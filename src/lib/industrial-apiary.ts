@@ -5,7 +5,6 @@ enum UPGRADE_TYPES {
 	HEATER = 6,
 	COOLER = 7,
 }
-
 /** Workaround to enable pushing upgrades into apiary */
 const transferUpgradeToApiaryJuggle = (
 	apiary: ApiaryPeripheral,
@@ -39,6 +38,31 @@ const transferUpgradeToApiaryJuggle = (
 		})
 	}
 }
+
+const removeUpgradesFromApiary = (
+	apiary: ApiaryPeripheral,
+	upgradeType: UPGRADE_TYPES,
+) => {
+	const ae2Interface = peripheral.find<AE2GridPeripheral>(
+		'appliedenergistics2:interface',
+	)[0]
+	const upgrade = apiary.list()
+	Object.keys(upgrade).forEach((key) => {
+		const slot = key as unknown as number
+		const upgradeItem = upgrade[slot]
+		if (
+			upgradeItem.name === 'gendustry:apiary.upgrade' &&
+			upgradeItem.damage === upgradeType
+		) {
+			apiary.pushItems(
+				peripheral.getName(ae2Interface),
+				slot,
+				upgradeItem.count,
+			)
+		}
+	})
+}
+
 const handleApiaryErrors = () => {
 	const apiaries = peripheral.find<ApiaryPeripheral>(
 		'gendustry:industrial_apiary',
@@ -46,28 +70,50 @@ const handleApiaryErrors = () => {
 	for (const apiary of apiaries) {
 		const error = apiary.getErrors()
 
-		// for every error, print it
 		error.forEach((err) => {
 			err.forEach((errorType) => {
 				switch (errorType) {
 					case 'forestry:too_humid':
-						// ignore
+						removeUpgradesFromApiary(
+							apiary,
+							UPGRADE_TYPES.HUMIDIFIER,
+						)
+						transferUpgradeToApiaryJuggle(
+							apiary,
+							UPGRADE_TYPES.DRYER,
+						)
+						break
+					case 'forestry:too_arid':
+						removeUpgradesFromApiary(apiary, UPGRADE_TYPES.DRYER)
+						transferUpgradeToApiaryJuggle(
+							apiary,
+							UPGRADE_TYPES.HUMIDIFIER,
+						)
+						break
+
+					case 'forestry:too_hot':
+						removeUpgradesFromApiary(apiary, UPGRADE_TYPES.HEATER)
+						transferUpgradeToApiaryJuggle(
+							apiary,
+							UPGRADE_TYPES.COOLER,
+						)
 						break
 					case 'forestry:too_cold':
+						removeUpgradesFromApiary(apiary, UPGRADE_TYPES.COOLER)
 						transferUpgradeToApiaryJuggle(
 							apiary,
 							UPGRADE_TYPES.HEATER,
 						)
 						break
-					case 'forestry:not_gloomy':
-						// ignore
+
+					case 'forestry:no_flower':
+						print(
+							'Potentially no flower -- could be a false positive',
+						)
 						break
-					case 'forestry:too_arid':
-						// ignore
-						break
-					case 'forestry:not_lucid':
-						// ignore
-						break
+					case 'forestry:no_queen':
+					case 'forestry:not_lucid': // Sleeping?
+					case 'forestry:not_gloomy': // Not dark enough?
 					case 'forestry:not_night':
 					case 'forestry:not_day':
 						// ignore
@@ -81,6 +127,30 @@ const handleApiaryErrors = () => {
 		})
 	}
 }
+
+/** If below 4 lifespan upgrades, add them */
+const addLifespanUpgrades = () => {
+	const apiaries = peripheral.find<ApiaryPeripheral>(
+		'gendustry:industrial_apiary',
+	)
+	for (const apiary of apiaries) {
+		const upgrades = apiary.list()
+		let lifespanCount = 0
+		Object.keys(upgrades).forEach((key) => {
+			const upgrade = upgrades[key]
+			if (
+				upgrade.name === 'gendustry:apiary.upgrade' &&
+				upgrade.damage === UPGRADE_TYPES.LIFESPAN
+			) {
+				lifespanCount += upgrade.count
+			}
+		})
+		if (lifespanCount < 4) {
+			transferUpgradeToApiaryJuggle(apiary, UPGRADE_TYPES.LIFESPAN) // This is kinda inefficient, does 1 at a time
+		}
+	}
+}
+
 const emptyOutputSlots = () => {
 	const beeCrate = peripheral.find<InventoryPeripheral>(
 		'actuallyadditions:giantchestlarge',
@@ -97,7 +167,6 @@ const emptyOutputSlots = () => {
 		Object.keys(itemList).forEach((key) => {
 			const slot = key as unknown as number
 			if (slot - 6 > 0) {
-				print('slot: ' + slot) // should be above or equal to 7
 				const itemMeta = apiary.getItemMeta(slot)
 				if (!itemMeta) return
 				if (
@@ -119,5 +188,6 @@ const emptyOutputSlots = () => {
 
 export const maintainApiary = () => {
 	handleApiaryErrors()
+	addLifespanUpgrades()
 	emptyOutputSlots()
 }

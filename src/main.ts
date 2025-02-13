@@ -33,7 +33,7 @@ while (true) {
 	maintainMutagen()
 	maintainApiary()
 
-	// createNewSpecies()
+	createNewSpecies()
 
 	sleep(1)
 }

@@ -650,7 +650,16 @@ declare type ItemDetail = {
 declare class InventoryPeripheral implements IPeripheral {
 	size(): number
 	/** List all items in this inventory */
-	list(): { [index: number]: { name: string; count: number; nbt?: string } }
+	list(): {
+		[index: number]: {
+			name: string
+			count: number
+			damage: number
+
+			// Unconfirmed
+			nbt?: string
+		}
+	}
 	getItemMeta(slot: number): ItemDetail | undefined
 	getItemLimit(slot: number): number
 	/** Push items from this inventory to another inventory. Returns the amount transferred. */
@@ -678,11 +687,14 @@ declare class ApiaryPeripheral
 	getErrors(): LuaMultiReturn<
 		[
 			(
-				| 'forestry:not_night'
+				| 'forestry:no_queen'
+				| 'forestry:no_flower'
 				| 'forestry:not_day'
+				| 'forestry:not_night'
+				| 'forestry:too_arid'
 				| 'forestry:too_humid'
 				| 'forestry:too_cold'
-				| 'forestry:too_arid'
+				| 'forestry:too_hot'
 				| 'forestry:not_gloomy'
 				| 'forestry:not_lucid'
 			)[],
