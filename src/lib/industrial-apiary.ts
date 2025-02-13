@@ -111,6 +111,9 @@ const handleApiaryErrors = () => {
 							'Potentially no flower -- could be a false positive',
 						)
 						break
+					case 'forestry:no_sky':
+						print('No sky -- fix your setup')
+						break
 					case 'forestry:no_queen':
 					case 'forestry:not_lucid': // Sleeping?
 					case 'forestry:not_gloomy': // Not dark enough?

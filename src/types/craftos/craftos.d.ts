@@ -687,6 +687,7 @@ declare class ApiaryPeripheral
 	getErrors(): LuaMultiReturn<
 		[
 			(
+				| 'forestry:no_sky'
 				| 'forestry:no_queen'
 				| 'forestry:no_flower'
 				| 'forestry:not_day'
