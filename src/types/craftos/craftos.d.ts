@@ -512,7 +512,7 @@ declare class FluidStoragePeripheral implements IPeripheral {
 
 declare type ItemDetail = {
     name: string;
-    count: string;
+    count: number;
     nbt?: string;
     displayName: string;
     maxCount: number;
@@ -529,7 +529,7 @@ declare type ItemDetail = {
 declare class InventoryPeripheral implements IPeripheral {
     size(): number;
     list(): {[index: number]: {name: string, count: number, nbt?: string}};
-    getItemDetail(slot: number): ItemDetail|undefined;
+    getItemMeta(slot: number): ItemDetail|undefined;
     getItemLimit(slot: number): number;
     pushItems(to: string, slot: number, limit?: number, toSlot?: number): number;
     pullItems(from: string, slot: number, limit?: number, fromSlot?: number): number;
