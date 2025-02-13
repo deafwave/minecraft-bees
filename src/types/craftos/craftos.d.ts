@@ -536,15 +536,14 @@ declare class InventoryPeripheral implements IPeripheral {
 }
 /** @noSelf **/
 declare namespace peripheral {
-    function getNames(): string[];
-    function isPresent(name: string): boolean;
-    function getType(peripheral: IPeripheral|string): LuaMultiReturn<[...string[]]>;
-    function hasType(peripheral: IPeripheral|string, type: string): boolean|undefined;
+    function call(side: string, method: string, ...args: any[]): LuaMultiReturn<[...any[]]>;
+    function find<T extends IPeripheral>(type: string, filter?: (name: string, peripheral: T) => boolean): LuaMultiReturn<[...T[]]>;
     function getMethods(name: string): string[]|undefined;
     function getName(peripheral: IPeripheral): string;
-    function call(side: string, method: string, ...args: any[]): LuaMultiReturn<[...any[]]>;
+    function getNames(): string[];
+    function getType(peripheral: IPeripheral|string): LuaMultiReturn<[...string[]]>;
+    function isPresent(name: string): boolean;
     function wrap<T extends IPeripheral>(name: string): T | undefined;
-    function find<T extends IPeripheral>(type: string, filter?: (name: string, peripheral: T) => boolean): LuaMultiReturn<[...T[]]>;
 }
 /** @noSelf **/
 declare namespace pocket {
