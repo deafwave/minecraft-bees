@@ -191,9 +191,9 @@ interface BreedingPaths {
 }
 let cachedBreedingPaths: BreedingPaths
 export function getBreedingPaths(): BreedingPaths {
-	// if (cachedBreedingPaths) {
-	//     return cachedBreedingPaths;
-	// }
+	if (cachedBreedingPaths) {
+		return cachedBreedingPaths
+	}
 
 	print('Calculating all breeding paths...')
 	const allPaths: { [species: string]: Set<string> } = {}

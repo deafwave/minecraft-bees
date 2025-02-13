@@ -16,9 +16,8 @@ const prepareQueen = () => {
 	const mutatron = mutatrons[0]
 	const slot1 = mutatron.getItemMeta(1)
 	const slot2 = mutatron.getItemMeta(2)
-
 	if (slot1 || slot2) {
-		return false // wait for mutatron to be empty
+		return false
 	}
 
 	const inventory = getExistingBees(true, true)
