@@ -1,4 +1,4 @@
-import { wantedBees } from "../config/meatballcraft";
+import { protectedBees, wantedBees } from "../config/meatballcraft";
 import { getExistingBees } from "../lib/storage-bees";
 import { getBreedingPaths } from "../utils/breeding";
 import { yieldSmart } from "../utils/yield";
@@ -59,12 +59,32 @@ const finishQueen = () => {
 
 }
 
-const killQueen = () => {
+const processQueen = () => {
+    const apiaries = peripheral.find<InventoryPeripheral>("gendustry:industrial_apiary", (_, apiary) => {
+        return apiary.getItemMeta(1) === null;
+    });
 
+    // print("Empty apiaries: " + apiaries.length); 
+
+    const inventory = getExistingBees(false, false);
+    const queenSpecies = Object.keys(inventory.queens).filter(
+        (species) => protectedBees.indexOf(species) === -1
+    );
+
+    for (const apiary of apiaries) {
+        if (queenSpecies.length === 0) {
+            break
+        }
+        
+        const queen = inventory.queens[queenSpecies.pop()];
+        if (queen) {
+            queen.storage.pushItems(peripheral.getName(apiary), queen.slot, 1, 1);
+        }
+    }
 }
 
 export const createNewSpecies = () => {
     createQueen()
     finishQueen() // TODO: Add a config setting to turn this off for players who don't want to dupe bees
-    killQueen()
+    processQueen()
 }
