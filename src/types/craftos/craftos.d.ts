@@ -1,7 +1,7 @@
 /// <reference types="@jackmacwindows/lua-types/cc" />
 /** @noSelfInFile **/
 
-// Latest CC version: 1.109.3
+// Latest CC version: 1.89.2
 
 type Color = number;
 type Colour = Color;
