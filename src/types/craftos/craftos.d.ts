@@ -543,8 +543,8 @@ declare namespace peripheral {
     function getMethods(name: string): string[]|undefined;
     function getName(peripheral: IPeripheral): string;
     function call(side: string, method: string, ...args: any[]): LuaMultiReturn<[...any[]]>;
-    function wrap(name: string): IPeripheral | undefined;
-    function find(type: string, filter?: (name: string, peripheral: IPeripheral) => boolean): LuaMultiReturn<[...IPeripheral[]]>;
+    function wrap<T extends IPeripheral>(name: string): T | undefined;
+    function find<T extends IPeripheral>(type: string, filter?: (name: string, peripheral: T) => boolean): LuaMultiReturn<[...T[]]>;
 }
 /** @noSelf **/
 declare namespace pocket {
