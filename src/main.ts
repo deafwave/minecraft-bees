@@ -2,6 +2,7 @@ import { maintainMutatron } from './lib/advanced-mutatron'
 import { maintainApiary } from './lib/industrial-apiary'
 import { maintainMutagen } from './lib/mutagen-producer'
 import { createNewSpecies } from './processes/bees'
+import { writeToFile } from './utils/file'
 
 // import { findUnknownBees } from "./utils/breeding"
 
@@ -32,7 +33,7 @@ while (true) {
 	maintainMutagen()
 	maintainApiary()
 
-	createNewSpecies()
+	// createNewSpecies()
 
 	sleep(1)
 }
