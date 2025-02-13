@@ -1,5 +1,6 @@
 /** @noSelfInFile */
 import { baseBees, breedingChart, wantedBees } from '../config/meatballcraft'
+import { writeToFile } from './file'
 import { yieldSmart } from './yield'
 
 /** @noSelf */
@@ -214,7 +215,7 @@ export function getBreedingPaths(): BreedingPaths {
 						}
 						const joinedSortedParents = step.parents
 							.sort()
-							.join('_')
+							.join('|')
 						allPaths[step.target].add(joinedSortedParents)
 					}
 				}
@@ -225,7 +226,7 @@ export function getBreedingPaths(): BreedingPaths {
 	const result: BreedingPaths = {}
 	for (const [species, speciesSet] of Object.entries(allPaths)) {
 		result[species] = Array.from(speciesSet).map(
-			(item) => item.split('_') as [string, string],
+			(item) => item.split('|') as [string, string],
 		)
 	}
 
