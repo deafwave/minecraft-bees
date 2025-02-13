@@ -689,9 +689,7 @@ export const breedingChart = {
 	'gendustry.bee.Ringbearer': [
 		['extrabees.species.gold', 'magicbees.speciesTEEndearing'],
 	],
-	'gendustry.bee.Chevron': [
-		['careerbees.robot', 'extrabees.species.lightblue'],
-	],
+	'gendustry.bee.Chevron': [['careerbees.robot', 'gendustry.bee.lightblue']],
 	'gendustry.bee.Stargazer': [
 		['extrabees.species.quantum', 'extrabees.species.classical'],
 	],
