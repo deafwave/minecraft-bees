@@ -29,6 +29,6 @@ The script runs in a continuous loop, ensuring that all tasks are performed regu
 - Change function names from e.g. kill->process, etc. to be more socially acceptable
 
 ## Notes
-- Nameless & Abandoned requires Dragon Egg flower; instead of getting the Dragon Egg, use the assassin bee to terminate the first one
+- Nameless & Abandoned & Spectral & Phantasmal requires Dragon Egg flower; instead of getting the Dragon Egg, use the assassin bee to terminate the first one
 - mad scientist is manual
   - Apiary -> engineer + science -> TNT & Lever -> Bee-Bee Gun & Assassin
