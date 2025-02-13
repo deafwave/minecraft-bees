@@ -1,4 +1,5 @@
 import { maintainMutatron } from "./lib/advanced-mutatron"
+import { maintainMutagen } from "./lib/mutagen-producer"
 // import { findUnknownBees } from "./utils/breeding"
 
 // const unknownBees = findUnknownBees()
@@ -25,7 +26,7 @@ import { maintainMutatron } from "./lib/advanced-mutatron"
 
 while(true) {
     maintainMutatron()
-    // maintainMutagen()
+    maintainMutagen()
     // maintainApiary()
 
     // createPoorQualityQueen()
