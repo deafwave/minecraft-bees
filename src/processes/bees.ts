@@ -23,28 +23,33 @@ const createQueen = () => {
     for (const targetSpecies of wantedBees) {
         if (!inventory.existingSpecies[targetSpecies]) {
             print("Need: " + targetSpecies);
-            const xxxx = getBreedingPaths();
-            print(xxxx);
-            // for (const path of getBreedingPaths()) {
-            //     yieldSmart();
-            //     const assignedPath = assignBreedingRoles(path, inventory);
-            //     if (assignedPath) {
-            //         for (const step of assignedPath) {
-            //             if (!inventory.existingSpecies[step.target]) {
-            //                 const pair = findBestBreedingPair(inventory, step.princess, step.drone);
-            //                 if (pair) {
-            //                     print("  Creating " + step.target);
-            //                     print("    Princess: " + step.princess);
-            //                     print("    Drone: " + step.drone);
+            const breedingPaths = getBreedingPaths();
+            const allSpecies = Object.keys(breedingPaths);
+            for (const species of allSpecies) {
+                const allMethodsToCreateSpecies = breedingPaths[species];
+                yieldSmart();
+                for (const method of allMethodsToCreateSpecies) {
+                    const [parent1, parent2] = method;
+                    if (inventory.princesses[parent1] && inventory.drones[parent2]) {
+                        print("  Creating " + species);
+                        print("    Princess: " + parent1);
+                        print("    Drone: " + parent2);
 
-            //                     pair.princess.storage.pushItems(peripheral.getName(mutatron), pair.princess.slot, 1, 1);
-            //                     pair.drone.storage.pushItems(peripheral.getName(mutatron), pair.drone.slot, 1, 2);
-            //                     return true;
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
+                        inventory.princesses[parent1].storage.pushItems(peripheral.getName(mutatron), inventory.princesses[parent1].slot, 1, 1);
+                        inventory.drones[parent2].storage.pushItems(peripheral.getName(mutatron), inventory.drones[parent2].slot, 1, 2);
+                        return true;
+                    } else if (inventory.drones[parent1] && inventory.princesses[parent2]) {
+                        print("  Creating " + species);
+                        print("    Princess: " + parent2);
+                        print("    Drone: " + parent1);
+
+                        inventory.princesses[parent2].storage.pushItems(peripheral.getName(mutatron), inventory.princesses[parent2].slot, 1, 1);
+                        inventory.drones[parent1].storage.pushItems(peripheral.getName(mutatron), inventory.drones[parent1].slot, 1, 2);
+                        return true;
+                    }
+                }
+            }
+
         }
     }
     return false;

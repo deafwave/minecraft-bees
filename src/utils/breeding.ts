@@ -1,27 +1,33 @@
+/** @noSelfInFile */
 import { baseBees, breedingChart, wantedBees } from "../config/meatballcraft";
 import { yieldSmart } from "./yield";
 
+/** @noSelf */
 interface Inventory {
     princesses: Record<string, BeeInfo>;
     drones: Record<string, BeeInfo>;
 }
+/** @noSelf */
 interface BeeInfo {
     // Add relevant bee information properties here
     species: string;
     // Add other properties as needed
 }
 
+/** @noSelf */
 interface BreedingStep {
     target: string;
     parents: [string, string];
 }
 
+/** @noSelf */
 interface BreedingAssignment {
     target: string;
     princess: string;
     drone: string;
 }
 
+/** @noSelf */
 interface BreedingPair {
     princess: BeeInfo;
     drone: BeeInfo;
@@ -58,12 +64,12 @@ function findRequiredSpecies(targetSpecies: string, visited: Record<string, bool
 }
 
 function findBreedingPaths(
-    targetSpecies: string,
+    targetSpecies: string, // something is happening which is causing this to be nil in LUA
+
     currentPath: BreedingStep[] = [],
     allPaths: BreedingStep[][] = [],
     visited: Record<string, boolean> = {}
 ): BreedingStep[][] {
-    // Prevent infinite recursion
     if (visited[targetSpecies]) {
         return allPaths;
     }
@@ -78,19 +84,20 @@ function findBreedingPaths(
     }
 
     for (const parents of breedingChart[targetSpecies]) {
+        const [firstParent, secondParent] = parents;
         const newPath: BreedingStep = {
             target: targetSpecies,
-            parents: [parents[0], parents[1]]
+            parents: [firstParent, secondParent]
         };
 
         currentPath.push(newPath);
 
         // Recursively find paths for parents if they're not base bees
         if (!baseBees[parents[0]]) {
-            findBreedingPaths(parents[0], currentPath, allPaths, visited);
+            findBreedingPaths(firstParent, currentPath, allPaths, visited);
         }
         if (!baseBees[parents[1]]) {
-            findBreedingPaths(parents[1], currentPath, allPaths, visited);
+            findBreedingPaths(secondParent, currentPath, allPaths, visited);
         }
 
         const pathCopy = [...currentPath];
@@ -172,6 +179,7 @@ export function findUnknownBees(): string[] {
     return unknownBees.sort();
 }
 
+/** @noSelf */
 interface BreedingPaths {
     [species: string]: [string, string][];
 }
@@ -198,7 +206,8 @@ export function getBreedingPaths(): BreedingPaths {
                         if (!allPaths[step.target]) {
                             allPaths[step.target] = new Set();
                         }
-                        allPaths[step.target].add(JSON.stringify(step.parents.sort()));
+                        const joinedSortedParents = step.parents.sort().join("_");
+                        allPaths[step.target].add(joinedSortedParents);
                     }
                 }
             }
@@ -207,7 +216,7 @@ export function getBreedingPaths(): BreedingPaths {
 
     const result: BreedingPaths = {};
     for (const [species, speciesSet] of Object.entries(allPaths)) {
-        result[species] = Array.from(speciesSet).map(item => JSON.parse(item))
+        result[species] = Array.from(speciesSet).map(item => item.split("_") as [string, string]);
     }
 
     cachedBreedingPaths = result;

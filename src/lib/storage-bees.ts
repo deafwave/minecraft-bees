@@ -1,3 +1,4 @@
+/** @noSelf */
 interface ExistingBees {
     existingSpecies: { [species: string]: boolean };
     princesses: { [species: string]: { storage: InventoryPeripheral; slot: number } };
