@@ -1,6 +1,6 @@
 import { maintainMutatron } from "./lib/advanced-mutatron"
 import { maintainMutagen } from "./lib/mutagen-producer"
-import { getExistingBees } from "./lib/bee-storage"
+import { createNewSpecies } from "./processes/bees"
 
 // import { findUnknownBees } from "./utils/breeding"
 
@@ -31,9 +31,7 @@ while(true) {
     maintainMutagen()
     // maintainApiary()
 
-    // createPoorQualityQueen()
-    // finishQueen() // TODO: Add a config setting to turn this off for players who don't want to dupe bees
-    // killQueen()
+    createNewSpecies()
 
     sleep(1)
 }

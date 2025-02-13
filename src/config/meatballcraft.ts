@@ -1127,7 +1127,7 @@ export const protectedBees = [
 ]
 
 export const wantedBees = [
-    "forestry.speciesCultivated",
+    // "forestry.speciesCultivated",
     /** Enables creation of the bee-bee gun */
     // "careerbees.honey_smelter",
     /** Enables killing the temporal queen
@@ -1138,7 +1138,7 @@ export const wantedBees = [
 
     // TODO: Determine what bees are useful for the playthrough
     /** Enables getting more bees faster */
-    // "careerbees.acceleration",
+    "careerbees.acceleration",
 
     // Quest Bees
     // "extrabees.species.cyanite",
