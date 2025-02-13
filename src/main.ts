@@ -1,6 +1,7 @@
-import { maintainMutatron } from "./lib/advanced-mutatron"
-import { maintainMutagen } from "./lib/mutagen-producer"
-import { createNewSpecies } from "./processes/bees"
+import { maintainMutatron } from './lib/advanced-mutatron'
+import { maintainApiary } from './lib/industrial-apiary'
+import { maintainMutagen } from './lib/mutagen-producer'
+import { createNewSpecies } from './processes/bees'
 
 // import { findUnknownBees } from "./utils/breeding"
 
@@ -26,12 +27,12 @@ import { createNewSpecies } from "./processes/bees"
 // --     print("  " .. species)
 // -- end
 
-while(true) {
-    maintainMutatron()
-    maintainMutagen()
-    // maintainApiary()
+while (true) {
+	maintainMutatron()
+	maintainMutagen()
+	maintainApiary()
 
-    createNewSpecies()
+	createNewSpecies()
 
-    sleep(1)
+	sleep(1)
 }

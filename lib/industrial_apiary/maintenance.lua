@@ -53,50 +53,7 @@ local function addApiaryUpgrades()
     end
 end
 
-local function collectApiaryOutputs()
-    local apiaries = getApiaries()
-    if #apiaries == 0 then
-        print("No apiary peripherals found")
-        return false
-    end
-
-    local interface = peripheral.find("appliedenergistics2:interface")
-    local crate = peripheral.find("actuallyadditions:giantchestlarge")
-
-    if not interface then
-        print("No ME interface found")
-        return false
-    end
-
-    if not crate then
-        print("No ActuallyAdditions crate found")
-        return false
-    end
-
-    for _, apiary in ipairs(apiaries) do
-        for slot = 7, 15 do -- Output Slots
-            local item = apiary.getItemMeta(slot)
-            if item then
-                local targetPeripheral
-                local targetName
-
-                if item.name == "forestry:bee_princess_ge" or
-                    item.name == "forestry:bee_drone_ge" then
-                    targetPeripheral = crate
-                    targetName = peripheral.getName(crate)
-                else
-                    targetPeripheral = interface
-                    targetName = peripheral.getName(interface)
-                end
-
-                apiary.pushItems(targetName, slot)
-            end
-        end
-    end
-end
-
 local function maintenance()
-    collectApiaryOutputs()
     addApiaryUpgrades() -- FIXME: This is not working as intended
 end
 
