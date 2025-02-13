@@ -512,17 +512,31 @@ declare class FluidStoragePeripheral implements IPeripheral {
 
 declare type ItemDetail = {
     name: string;
-    count: number;
-    nbt?: string;
+    /** Rocky Drone */
     displayName: string;
+    count: number;
+    maxDamage?: number;
     maxCount: number;
     damage?: number;
-    maxDamage?: number;
+    /** item.for.bee_princess_ge */
+    rawName: string;
+    /** Useless */
+    nbtHash?: string;
+
+    /** Might just be for bees */
+    individual?: {
+        id: string;
+        analyszed: boolean
+    }
+    
+    // Unconfimred
+    nbt?: string;
     durability?: number;
     tags: string[];
     lore?: string[]; //?
     enchantments?: {name: string, level: number, displayName: string}[];
     unbreakable?: boolean;
+    
 }
 
 /** @noSelf */
