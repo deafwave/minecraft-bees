@@ -649,15 +649,23 @@ declare type ItemDetail = {
 /** @noSelf */
 declare class InventoryPeripheral implements IPeripheral {
 	size(): number
+	/** List all items in this inventory */
 	list(): { [index: number]: { name: string; count: number; nbt?: string } }
 	getItemMeta(slot: number): ItemDetail | undefined
 	getItemLimit(slot: number): number
-	pushItems(to: string, slot: number, limit?: number, toSlot?: number): number
-	pullItems(
-		from: string,
-		slot: number,
+	/** Push items from this inventory to another inventory. Returns the amount transferred. */
+	pushItems(
+		toName: string,
+		fromSlot: number,
 		limit?: number,
-		fromSlot?: number,
+		toSlot?: number,
+	): number
+	/** Pull items to this inventory from another inventory. Returns the amount transferred. */
+	pullItems(
+		fromName: string,
+		fromSlot: number,
+		limit?: number,
+		toSlot?: number,
 	): number
 }
 /** @noSelf */
@@ -667,12 +675,67 @@ declare class ApiaryPeripheral
 {
 	getQueen(): any
 	getDrone(): any
-	getErrors(): any
+	getErrors(): LuaMultiReturn<
+		[
+			(
+				| 'forestry:not_night'
+				| 'forestry:not_day'
+				| 'forestry:too_humid'
+				| 'forestry:too_cold'
+				| 'forestry:too_arid'
+				| 'forestry:not_gloomy'
+				| 'forestry:not_lucid'
+			)[],
+		]
+	>
 	getHumidity(): any
 	getTemperature(): any
+
+	/** Drop an item on the ground */
+	drop(slot: number, limit?: number, direction?: string): any
+	/** Suck an item from the ground */
+	suck(slot?: number, limit?: number): any
+	getDocs(): any
+	/** Get metadata about this object */
+	getMetadata(): any
+	getTransferLocations(): any
+	/** get the item in the specified slot */
+	getItem(slot: number): any
+
+	// Power
+	getEnergyCapacity(): any
+	getEnergyStored(): any
+	getRFCapacity(): any
+	getRFStored(): any
 }
 
 /** @noSelf **/
+declare class AE2GridPeripheral implements IPeripheral {
+	findItem(item: string): {
+		/** Craft thius item, returning a reference to the crafting task */
+		craft(quantity: number): unknown
+		/** Export this item from the AE network to an inventory. Returns the amount transferred. */
+		export(toName: string, limit?: number, toSlot?: number): number
+		getMetadata(): ItemDetail
+		getTransferLocations(): unknown
+	}
+	findItems(item: string): {
+		/** Craft thius item, returning a reference to the crafting task */
+		craft(quantity: number): unknown
+		/** Export this item from the AE network to an inventory. Returns the amount transferred. */
+		export(toName: string, limit?: number, toSlot?: number): number
+		getMetadata(): {
+			count: ItemDetail
+		}
+		getTransferLocations(): unknown
+	}[]
+	getCraftingCPUs(): unknown
+	getNetworkEnergyStored(): number
+	getNetworkEnergyUsage(): number
+	/** List all items which are stored in the network */
+	listAvailableItems(): unknown
+}
+/** @noSelf */
 declare namespace peripheral {
 	function call(
 		side: string,
@@ -680,7 +743,7 @@ declare namespace peripheral {
 		...args: any[]
 	): LuaMultiReturn<[...any[]]>
 	function find<T extends IPeripheral>(
-		type: string,
+		type: string | 'appliedenergistics2:interface',
 		filter?: (name: string, peripheral: T) => boolean,
 	): LuaMultiReturn<[...T[]]>
 	function getMethods(name: string): string[] | undefined
