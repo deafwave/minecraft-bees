@@ -1,4 +1,4 @@
-import { transferItemFromAE2 } from "../utils/ae2";
+import { transferItemFromAE2 } from '../utils/ae2'
 
 // function emptyOutputSlot(): boolean {
 //     const mutatrons = getMutatrons();
@@ -25,6 +25,12 @@ import { transferItemFromAE2 } from "../utils/ae2";
 // }
 
 export const maintainMutatron = () => {
-    transferItemFromAE2("gendustry:labware", "gendustry:mutatron_advanced", 2, 2, 4);
-    // emptyOutputSlot(); // Only used when finishQueen() is disabled
+	transferItemFromAE2(
+		'gendustry:labware',
+		'gendustry:mutatron_advanced',
+		2,
+		2,
+		4,
+	)
+	// emptyOutputSlot(); // Only used when finishQueen() is disabled
 }

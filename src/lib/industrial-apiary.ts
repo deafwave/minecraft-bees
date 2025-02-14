@@ -1,3 +1,5 @@
+import { ae2Interface, droneCrate, princessCrate } from '../config/storage'
+
 enum UPGRADE_TYPES {
 	LIFESPAN = 1,
 	HUMIDIFIER = 4,
@@ -10,21 +12,15 @@ const transferUpgradeToApiaryJuggle = (
 	apiary: ApiaryPeripheral,
 	upgradeType: UPGRADE_TYPES,
 ) => {
-	const ae2Interface = peripheral.find<AE2GridPeripheral>(
-		'appliedenergistics2:interface',
-	)[0]
-	const crate = peripheral.find<InventoryPeripheral>(
-		'actuallyadditions:giantchestlarge',
-	)[0]
 	const upgrade = ae2Interface.findItem(
 		'gendustry:apiary.upgrade@' + upgradeType,
 	)
 	if (upgrade && upgrade.getMetadata().count > 0) {
 		/** BUG: Can't export upgrades directly to apiary, so we export to temp storage */
-		upgrade.export(peripheral.getName(crate), 1)
+		upgrade.export(peripheral.getName(droneCrate), 1)
 		sleep(1) // lame way to do this, but it should work
 
-		const itemList = crate.list()
+		const itemList = droneCrate.list()
 		Object.keys(itemList).forEach((key) => {
 			const itemData = itemList[key]
 			if (
@@ -33,7 +29,7 @@ const transferUpgradeToApiaryJuggle = (
 			) {
 				const slot = key as unknown as number
 				// BUG: Can't push upgrades into apiary, so we pull them
-				apiary.pullItems(peripheral.getName(crate), slot, 1)
+				apiary.pullItems(peripheral.getName(droneCrate), slot, 1)
 			}
 		})
 	}
@@ -155,12 +151,6 @@ const addLifespanUpgrades = () => {
 }
 
 const emptyOutputSlots = () => {
-	const beeCrate = peripheral.find<InventoryPeripheral>(
-		'actuallyadditions:giantchestlarge',
-	)[0]
-	const ae2Interface = peripheral.find<AE2GridPeripheral>(
-		'appliedenergistics2:interface',
-	)[0]
 	const apiaries = peripheral.find<ApiaryPeripheral>(
 		'gendustry:industrial_apiary',
 	)
@@ -172,14 +162,10 @@ const emptyOutputSlots = () => {
 			if (slot - 6 > 0) {
 				const itemMeta = apiary.getItemMeta(slot)
 				if (!itemMeta) return
-				if (
-					[
-						'forestry:bee_princess_ge',
-						'forestry:bee_drone_ge',
-					].includes(itemMeta.name)
-				) {
-					// push to crate
-					apiary.pushItems(peripheral.getName(beeCrate), slot)
+				if (itemMeta.name === 'forestry:bee_princess_ge') {
+					apiary.pushItems(peripheral.getName(princessCrate), slot)
+				} else if (itemMeta.name === 'forestry:bee_drone_ge') {
+					apiary.pushItems(peripheral.getName(droneCrate), slot)
 				} else {
 					apiary.pushItems(peripheral.getName(ae2Interface), slot)
 				}

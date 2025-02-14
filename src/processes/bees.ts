@@ -1,4 +1,5 @@
 import { protectedBees, wantedBees } from '../config/meatballcraft'
+import { princessCrate } from '../config/storage'
 import { getExistingBees } from '../lib/storage-bees'
 import { getBreedingPaths } from '../utils/breeding'
 import { yieldSmart } from '../utils/yield'
@@ -99,10 +100,6 @@ const craftQueen = () => {
 	if (mutatrons.length === 0) return
 
 	const inventory = getExistingBees(false, true)
-	const storage = peripheral.find<InventoryPeripheral>(
-		'actuallyadditions:giantchestlarge',
-	)[0]
-
 	for (const mutatron of mutatrons) {
 		const itemList = mutatron.list()
 		Object.keys(itemList).forEach((key) => {
@@ -117,15 +114,18 @@ const craftQueen = () => {
 				const species = itemMeta.individual.id
 				if (preparedQueens.has(species)) {
 					if (!inventory.queens[species]) {
-						mutatron.pushItems(peripheral.getName(storage), slot)
+						mutatron.pushItems(
+							peripheral.getName(princessCrate),
+							slot,
+						)
 					}
 					preparedQueens.delete(species)
 					return
 				}
 			}
 		})
-		mutatron.pushItems(peripheral.getName(storage), 1)
-		mutatron.pushItems(peripheral.getName(storage), 2)
+		mutatron.pushItems(peripheral.getName(princessCrate), 1)
+		mutatron.pushItems(peripheral.getName(princessCrate), 2)
 	}
 }
 
@@ -162,7 +162,7 @@ const processQueen = () => {
 }
 
 export const createNewSpecies = () => {
-	prepareQueen()
-	craftQueen() // TODO: Add a config setting to turn this off for players who don't want to dupe bees
-	processQueen()
+	prepareQueen() // 0.002, 0.377
+	craftQueen() // 0.277, 0.278, 0.282 // TODO: Add a config setting to turn this off for players who don't want to dupe bees
+	processQueen() // 0.267, 0.265, 0.267
 }
