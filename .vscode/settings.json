@@ -1,48 +1,14 @@
 {
-    "Lua.runtime.version": "Lua 5.1",
-    "Lua.diagnostics.globals": [
-        "bit",
-        "colors",
-        "colours",
-        "commands",
-        "disk",
-        "fs",
-        "gps",
-        "help",
-        "http",
-        "keys",
-        "multishell",
-        "paintutils",
-        "parallel",
-        "peripheral",
-        "pocket",
-        "rednet",
-        "redstone",
-        "rs",
-        "settings",
-        "shell",
-        "term",
-        "textutils",
-        "turtle",
-        "vector",
-        "window",
-        "_CC_DEFAULT_SETTINGS",
-        "_HOST",
-        "printError",
-        "write",
-        "read",
-        "sleep"
-    ],
-    "Lua.runtime.builtin": {
-        "bit32": "enable",
-        "bit": "disable",
-        "utf8": "enable"
-    },
-    "Lua.diagnostics.disable": [
-        "undefined-field",
-        "deprecated"
-    ],
-    "[lua]": {
-        "editor.formatOnSave": true
-    }
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.patterns": {
+		"package.json": "pnpm-lock.yaml"
+	},
+	"files.eol": "\n",
+	"editor.formatOnPaste": false,
+	"editor.formatOnType": false,
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "file",
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
 }

@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "jackmacwindows.vscode-computercraft",
-        "sumneko.lua"
+        "sumneko.lua",
+        "ms-vscode.vscode-typescript-next"
     ]
 }

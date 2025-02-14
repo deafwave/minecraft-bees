@@ -1,0 +1,15 @@
+{
+  "name": "@deafwave/minecraft-lua",
+  "version": "1.0.0",
+  "description": "Enables learning TypeScript via the ComputerCraft or OpenComputers Minecraft mods.",
+  "scripts": {
+    "build": "tstl",
+    "dev": "tstl --watch"
+  },
+  "devDependencies": {
+    "typescript": "5.7.2",
+    "@jackmacwindows/lua-types": "^2.13.2",
+    "@jackmacwindows/typescript-to-lua": "^1.22.0"
+  },
+  "license": "MIT"
+}
