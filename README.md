@@ -1,6 +1,6 @@
-# minecraft-lua
+# minecraft-bees
 
-Enables learning Lua via the ComputerCraft or OpenComputers Minecraft mods.
+Enables learning TypeScript to Lua via the ComputerCraft or OpenComputers Minecraft mods.
 
 ## bees (MeatballCraft)
 
