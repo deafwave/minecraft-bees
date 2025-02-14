@@ -30,3 +30,6 @@ The script runs in a continuous loop, ensuring that all tasks are performed regu
 - Nameless & Abandoned & Spectral & Phantasmal requires Dragon Egg flower; instead of getting the Dragon Egg, use the assassin bee to terminate the first one
 - mad scientist is manual
   - Apiary -> engineer + science -> TNT & Lever -> Bee-Bee Gun & Assassin
+
+### Random
+princess/drone -> gene editor -> breeding template -> industrial apiary -> stack of drones -> sampler | princess & drone -> gene editor -> production template -> production apiaries

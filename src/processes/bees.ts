@@ -1,4 +1,4 @@
-import { protectedBees, wantedBees } from '../config/meatballcraft'
+import { baseBees, protectedBees, wantedBees } from '../config/meatballcraft'
 import { droneCrate, princessCrate, queenCrate } from '../config/storage'
 import { getExistingBees } from '../lib/storage-bees'
 import { getBreedingPaths } from '../utils/breeding'
@@ -25,7 +25,12 @@ const prepareQueen = () => {
 
 	for (const targetSpecies of wantedBees) {
 		if (!inventory.existingSpecies[targetSpecies]) {
-			print('Need: ' + targetSpecies)
+			// if target species is in base bees, print what the user needs to do
+			if (baseBees[targetSpecies]) {
+				print(`        TODO: ${baseBees[targetSpecies]}`)
+				continue
+			}
+			print('Breed: ' + targetSpecies)
 			const breedingPaths = getBreedingPaths()
 			const allSpecies = Object.keys(breedingPaths)
 			for (const species of allSpecies) {
