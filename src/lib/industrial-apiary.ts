@@ -1,4 +1,9 @@
-import { ae2Interface, droneCrate, princessCrate } from '../config/storage'
+import {
+	ae2Interface,
+	droneCrate,
+	princessCrate,
+	queenCrate,
+} from '../config/storage'
 
 enum UPGRADE_TYPES {
 	LIFESPAN = 1,
@@ -17,10 +22,10 @@ const transferUpgradeToApiaryJuggle = (
 	)
 	if (upgrade && upgrade.getMetadata().count > 0) {
 		/** BUG: Can't export upgrades directly to apiary, so we export to temp storage */
-		upgrade.export(peripheral.getName(droneCrate), 1)
-		sleep(1) // lame way to do this, but it should work
+		upgrade.export(peripheral.getName(queenCrate), 1)
+		sleep(2) // lame way to do this, but it should work
 
-		const itemList = droneCrate.list()
+		const itemList = queenCrate.list()
 		Object.keys(itemList).forEach((key) => {
 			const itemData = itemList[key]
 			if (
@@ -29,7 +34,7 @@ const transferUpgradeToApiaryJuggle = (
 			) {
 				const slot = key as unknown as number
 				// BUG: Can't push upgrades into apiary, so we pull them
-				apiary.pullItems(peripheral.getName(droneCrate), slot, 1)
+				apiary.pullItems(peripheral.getName(queenCrate), slot, 1)
 			}
 		})
 	}

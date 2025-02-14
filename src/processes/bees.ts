@@ -1,5 +1,5 @@
 import { protectedBees, wantedBees } from '../config/meatballcraft'
-import { princessCrate } from '../config/storage'
+import { droneCrate, princessCrate, queenCrate } from '../config/storage'
 import { getExistingBees } from '../lib/storage-bees'
 import { getBreedingPaths } from '../utils/breeding'
 import { yieldSmart } from '../utils/yield'
@@ -114,10 +114,7 @@ const craftQueen = () => {
 				const species = itemMeta.individual.id
 				if (preparedQueens.has(species)) {
 					if (!inventory.queens[species]) {
-						mutatron.pushItems(
-							peripheral.getName(princessCrate),
-							slot,
-						)
+						mutatron.pushItems(peripheral.getName(queenCrate), slot)
 					}
 					preparedQueens.delete(species)
 					return
@@ -125,7 +122,7 @@ const craftQueen = () => {
 			}
 		})
 		mutatron.pushItems(peripheral.getName(princessCrate), 1)
-		mutatron.pushItems(peripheral.getName(princessCrate), 2)
+		mutatron.pushItems(peripheral.getName(droneCrate), 2)
 	}
 }
 
